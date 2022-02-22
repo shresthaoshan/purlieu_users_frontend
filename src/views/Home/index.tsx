@@ -20,7 +20,7 @@ export const Home = () => {
     <Container>
       <CardPrototype src={kuIdentityCardProtoType} alt="idCard" />
       <PaymentDetails>
-        <CardDetailsLabel>Card Details</CardDetailsLabel>
+        <CardDetailsLabel>Card Details </CardDetailsLabel>
         <Label>Name :</Label>
         <LabelInput placeholder="Enter your name"></LabelInput>
         <Label>Unique ID :</Label>
