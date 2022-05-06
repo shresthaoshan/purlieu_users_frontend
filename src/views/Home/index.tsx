@@ -15,8 +15,10 @@ import {
 	Medium,
 	PaymentDetails,
 } from "../style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { checkout } from "../../khalti-checkout";
+import axios from "axios";
+import apiConfig from "../../config/api.config";
 
 export const Home = () => {
 	const [paymentData, setPaymentData] = useState(() => ({
@@ -33,7 +35,35 @@ export const Home = () => {
 	};
 
 	const onKhaltiClick = () => {
-		checkout.show({ amount: paymentData.amount * 100 });
+		checkout.show({
+			amount: paymentData.amount * 100,
+			eventHandler: {
+				onSuccess: (ev: any) => {
+					const { amount, token } = ev;
+					axios
+						.post(
+							apiConfig.API_URL + "/api/verification/khalti",
+							{
+								amount,
+								token,
+								remarks: paymentData.remarks,
+								receipent: paymentData.uniqueId,
+							},
+							{
+								headers: {
+									"x-api-key": apiConfig.API_KEY,
+								},
+							}
+						)
+						.then((response: any) => {
+							console.log({ response });
+						})
+						.catch((ex: any) => {
+							console.log({ ex });
+						});
+				},
+			},
+		});
 	};
 
 	return (
@@ -62,7 +92,7 @@ export const Home = () => {
 				</Amount>
 				<Label style={{ marginTop: "1rem" }}>Pay With :</Label>
 				<DigitalMediums>
-					<Medium src={EsewaLogo} alt="esewa" />
+					{/* <Medium src={EsewaLogo} alt="esewa" /> */}
 					<Medium
 						src={KhaltiLogo}
 						alt="khalti"
@@ -70,7 +100,7 @@ export const Home = () => {
 							onKhaltiClick();
 						}}
 					/>
-					<Medium src={ImeLogo} alt="imePay" />
+					{/* <Medium src={ImeLogo} alt="imePay" /> */}
 				</DigitalMediums>
 			</PaymentDetails>
 		</Container>
