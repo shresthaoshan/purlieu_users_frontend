@@ -72,7 +72,7 @@ export const Home = () => {
 			<PaymentDetails>
 				<CardDetailsLabel>Card Details </CardDetailsLabel>
 				<Label>Unique ID :</Label>
-				<LabelInput onChange={(e: any) => updatePaymentData("uniqueId")(e.target.value)} placeholder="Enter your name"></LabelInput>
+				<LabelInput onChange={(e: any) => updatePaymentData("uniqueId")(e.target.value)} placeholder="Enter unique id"></LabelInput>
 				<Label>Amount :</Label>
 				<Amount>
 					<LeftRs>Rs.</LeftRs>
